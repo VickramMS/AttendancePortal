@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container pt-4">
+    <h6>Contactless Attendance System Records</h6>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Attendance</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{student.user.username}}</td>
+                <td>
+                    {% if student.attendance %}
+                    Present
+                    {% else %}
+                    Absent
+                    {% endif %}
+                </td>
+                <td>{{student.timeStamp}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
