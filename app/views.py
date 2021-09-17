@@ -17,24 +17,23 @@ class AddAttendanceAPI(APIView):
     def post(self, request):
         try:
             user = User.objects.get(username=request.POST.get('studentName'))
+            if user:
+                if len(Attendance.objects.filter(user=user)) > 0:
+                    return JsonResponse({
+                        "response" : "Attendance has been already marked for %s" %(user.username)
+                    })
+                
+                else:
+                    attendance = Attendance()
+                    attendance.user = user
+                    attendance.attendance = True
+                    attendance.timeStamp = timezone.now()
+                    attendance.save()
+                    return JsonResponse({
+                        "response" : "Attendance has been marked for %s" %(user.username)
+                    })
         except:
             user = None
             return JsonResponse({
                 "response" : "No user found"
             })
-
-        if user:
-            try:
-                if len(Attendance.objects.filter(user=user)) > 1:
-                    return JsonResponse({
-                        "response" : "Attendance has been already marked for %s" %(user.username)
-                    })
-            except:
-                attendance = Attendance()
-                attendance.user = user
-                attendance.attendance = True
-                attendance.timeStamp = timezone.now()
-                attendance.save()
-                return JsonResponse({
-                    "response" : "Attendance has been marked for %s" %(user.username)
-                })
