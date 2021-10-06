@@ -6,6 +6,7 @@ class Attendance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     attendance = models.BooleanField(default=False)
     timeStamp = models.DateTimeField(null=True, blank=True)
+    temperature = models.FloatField(default=0)
 
     def __str__(self):
         return self.user.username

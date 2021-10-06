@@ -27,6 +27,7 @@ class AddAttendanceAPI(APIView):
                     attendance = Attendance()
                     attendance.user = user
                     attendance.attendance = True
+                    attendance.temperature = request.POST.get('temperature')
                     attendance.timeStamp = timezone.now()
                     attendance.save()
                     return JsonResponse({
