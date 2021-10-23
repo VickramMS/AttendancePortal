@@ -16,7 +16,8 @@ class AttendanceView(View):
 class AddAttendanceAPI(APIView):
     def post(self, request):
         try:
-            user = User.objects.get(username=request.POST.get('studentName'))
+            user = User.objects.get(username=request.POST.get('rollNo'))
+
             if user:
                 if len(Attendance.objects.filter(user=user)) > 0:
                     return JsonResponse({
