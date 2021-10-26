@@ -10,6 +10,7 @@
                 <th scope="col">Roll No</th>
                 <th scope="col">Name</th>
                 <th scope="col">Attendance</th>
+                <th scope="col">Temperature</th>
                 <th scope="col">Time</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                     Absent
                     {% endif %}
                 </td>
+                <td>{{student.temperature}}</td>
                 <td>{{student.timeStamp}}</td>
             </tr>
             {% endfor %}
