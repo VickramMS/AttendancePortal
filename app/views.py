@@ -4,12 +4,14 @@ from .models import *
 from django.http import JsonResponse
 from django.utils import timezone
 from rest_framework.views import APIView
-from datetime import datetime
+from django.conf import settings
+
 
 class AttendanceView(View):
     def get(self, request):
         context = {
-            "students" : Attendance.objects.all()
+            "students" : Attendance.objects.all(),
+            "temp" : settings.CELCIUS
         }
         return render(request, 'attendance.html', context)
 
@@ -28,7 +30,7 @@ class AddAttendanceAPI(APIView):
                     attendance = Attendance()
                     attendance.user = user
                     attendance.attendance = True
-                    attendance.temperature = request.POST.get('temperature')
+                    attendance.temperature = float(request.POST.get('temperature'))
                     attendance.timeStamp = timezone.now()
                     attendance.save()
                     return JsonResponse({

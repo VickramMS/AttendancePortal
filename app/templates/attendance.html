@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load temp %}
 {% block content %}
 <div class="container pt-4">
     <h6>Contactless Attendance System Records</h6>
@@ -27,7 +28,11 @@
                     Absent
                     {% endif %}
                 </td>
-                <td>{{student.temperature}}</td>
+                {% if temp %}
+                    <td>{{student.temperature|floatformat:2}}°C</td>
+                {% else %}
+                <td>{{student.temperature|temp|floatformat:2}}°F</td>
+                {% endif %}
                 <td>{{student.timeStamp}}</td>
             </tr>
             {% endfor %}
